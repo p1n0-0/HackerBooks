@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BookViewController" customModule="HackerBooks" customModuleProvider="target">
+            <connections>
+                <outlet property="authorsLabel" destination="gj9-an-WyD" id="mTl-F7-nD4"/>
+                <outlet property="backgroundImageView" destination="xR8-Gd-U6d" id="ZnR-Lo-Y4H"/>
+                <outlet property="favoriteButton" destination="Egs-Y2-o4D" id="S7T-f3-U67"/>
+                <outlet property="imageActivityIndicator" destination="cvI-5B-RvQ" id="hWd-Jc-haQ"/>
+                <outlet property="imageView" destination="abL-eU-5GZ" id="Orl-bV-O6a"/>
+                <outlet property="readBookButton" destination="rke-84-eqS" id="Nw8-ad-Z2a"/>
+                <outlet property="tagsLabel" destination="qQB-9b-hrD" id="Ull-Ah-Lec"/>
+                <outlet property="titleLabel" destination="cbu-be-zuM" id="TAV-qF-hWU"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="xR8-Gd-U6d">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="[Title]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cbu-be-zuM">
+                    <rect key="frame" x="8" y="300" width="584" height="30"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="25"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="abL-eU-5GZ">
+                    <rect key="frame" x="8" y="8" width="584" height="284"/>
+                </imageView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="cvI-5B-RvQ">
+                    <rect key="frame" x="282" y="132" width="37" height="37"/>
+                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </activityIndicatorView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Written by [Authors]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gj9-an-WyD">
+                    <rect key="frame" x="8" y="338" width="584" height="24"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-LightItalic" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tagged as: [Tags]" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qQB-9b-hrD">
+                    <rect key="frame" x="8" y="370" width="584" height="21"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-ThinItalic" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rke-84-eqS">
+                    <rect key="frame" x="203" y="538" width="194" height="42"/>
+                    <color key="backgroundColor" red="0.0" green="0.4823529411764706" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="25"/>
+                    <state key="normal" title=" Read this book ">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="displayBook:" destination="-1" eventType="touchUpInside" id="gTh-bC-gWH"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Egs-Y2-o4D">
+                    <rect key="frame" x="225" y="403" width="151" height="30"/>
+                    <color key="backgroundColor" red="0.0089084921766372956" green="0.79443108974358978" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <state key="normal" title=" Add to your favorites ">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="changeFavoriteStatus:" destination="-1" eventType="touchUpInside" id="ZFl-eX-Cwl"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="qQB-9b-hrD" secondAttribute="trailing" constant="8" id="1Ga-wA-JO4"/>
+                <constraint firstAttribute="trailing" secondItem="cbu-be-zuM" secondAttribute="trailing" constant="8" id="4Mp-LW-Kpc"/>
+                <constraint firstAttribute="bottom" secondItem="Egs-Y2-o4D" secondAttribute="bottom" constant="26" id="4kd-4U-eiJ"/>
+                <constraint firstItem="abL-eU-5GZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="7SX-qH-bLA"/>
+                <constraint firstItem="abL-eU-5GZ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="8zz-Wh-3N0"/>
+                <constraint firstAttribute="trailing" secondItem="abL-eU-5GZ" secondAttribute="trailing" constant="8" id="B4c-nn-LmC"/>
+                <constraint firstItem="xR8-Gd-U6d" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Cl4-4F-a5A"/>
+                <constraint firstItem="cvI-5B-RvQ" firstAttribute="centerY" secondItem="abL-eU-5GZ" secondAttribute="centerY" id="Koo-3h-NnB"/>
+                <constraint firstAttribute="trailing" secondItem="xR8-Gd-U6d" secondAttribute="trailing" id="PsA-2U-YJo"/>
+                <constraint firstAttribute="bottom" secondItem="xR8-Gd-U6d" secondAttribute="bottom" id="TvM-Mc-ETE"/>
+                <constraint firstItem="rke-84-eqS" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="V73-wN-3I7">
+                    <variation key="heightClass=compact" constant="125"/>
+                </constraint>
+                <constraint firstItem="Egs-Y2-o4D" firstAttribute="top" secondItem="qQB-9b-hrD" secondAttribute="bottom" constant="12" id="X4G-Ar-NP7"/>
+                <constraint firstItem="gj9-an-WyD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="XUh-KR-ie4"/>
+                <constraint firstItem="cbu-be-zuM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="d9X-PD-zYv"/>
+                <constraint firstItem="xR8-Gd-U6d" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ecZ-Nc-Xac"/>
+                <constraint firstItem="Egs-Y2-o4D" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fJ2-f1-JpP">
+                    <variation key="heightClass=compact" constant="-100"/>
+                </constraint>
+                <constraint firstAttribute="centerY" secondItem="abL-eU-5GZ" secondAttribute="bottom" constant="8" id="g2d-Rb-W7m"/>
+                <constraint firstItem="gj9-an-WyD" firstAttribute="top" secondItem="cbu-be-zuM" secondAttribute="bottom" constant="8" id="llW-PW-mpp"/>
+                <constraint firstItem="qQB-9b-hrD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="nD1-ag-Q9I"/>
+                <constraint firstItem="cbu-be-zuM" firstAttribute="top" secondItem="abL-eU-5GZ" secondAttribute="bottom" constant="8" id="nWG-xo-ASG"/>
+                <constraint firstItem="qQB-9b-hrD" firstAttribute="top" secondItem="gj9-an-WyD" secondAttribute="bottom" constant="8" id="pGj-bq-iGu"/>
+                <constraint firstAttribute="bottom" secondItem="rke-84-eqS" secondAttribute="bottom" constant="20" id="rBs-zR-lgP"/>
+                <constraint firstItem="cvI-5B-RvQ" firstAttribute="centerX" secondItem="abL-eU-5GZ" secondAttribute="centerX" id="uLJ-my-KIZ"/>
+                <constraint firstAttribute="trailing" secondItem="gj9-an-WyD" secondAttribute="trailing" constant="8" id="vXd-Xr-PIs"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="4kd-4U-eiJ"/>
+                </mask>
+            </variation>
+            <variation key="heightClass=compact">
+                <mask key="constraints">
+                    <include reference="4kd-4U-eiJ"/>
+                    <exclude reference="X4G-Ar-NP7"/>
+                </mask>
+            </variation>
+            <point key="canvasLocation" x="534" y="738"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Background.jpg" width="626" height="626"/>
+    </resources>
+</document>
