@@ -22,7 +22,7 @@ La aplicación implementa GCD en los recursos como las imagenes y PDF, se muestr
 
 #### Mirar en la ayuda isKindOfClass, ¿en que modos podemos trabajar? is, as?
 
-La clase isKindOfClass sirbe para saber si una determinada clase es de un tipo determinado. Durante la practica trabajo en varias ocasiones con el operador 'as', dicho operador es para realizar casting.
+La clase isKindOfClass sirve para saber si una determinada clase es de un tipo determinado. Durante la practica trabajo en varias ocasiones con el operador 'as', dicho operador es para realizar casting.
 
 #### ¿donde guardas las imagenes de portada y los PDF?
 
@@ -40,7 +40,7 @@ Se podría realizar mediante target->Action, delegado o notificaciones. En el ca
 
 #### Sobre el método reloadData, ¿es esto una aberración en el rendimiento? ¿Hay una forma alternativa? ¿Cuando crees que vale la pena usarlo?
 
-Al rendimiento afecta, pero no creo que sea una aberración. iOS solo va a recargar las celdas visibles en la pantalla y no todas las celdas puesto que las reaprochecha.
+No creo que sea una aberración. iOS solo va a recargar las celdas visibles en la pantalla y no todas las celdas puesto que las reaprochecha.
 
 Supongo que TableViewController implementará algún metodo para poder modificar la tabla sin tener que realizar un reload. Valdrá la pena usarlo cuando las celdas tengan muchas propiedades o cargen mucha información.
 
