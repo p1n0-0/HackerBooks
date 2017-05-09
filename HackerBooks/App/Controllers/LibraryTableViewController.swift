@@ -2,189 +2,231 @@
 //  LibraryTableViewController.swift
 //  HackerBooks
 //
-//  Created by Francisco Gómez Pino on 6/7/16.
-//  Copyright © 2016 Francisco Gómez Pino. All rights reserved.
+//  Created by Francisco Solano Gómez Pino on 08/05/2017.
+//  Copyright © 2017 Francisco Solano Gómez Pino. All rights reserved.
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
+import AlamofireSwiftyJSON
 
-let BookDidChangeNotification = "Selected book did change"
-let BookKey = "BookKey"
-let cellId = "BookCell"
+// MARK: - Global constants
+
+let BookDidChangeNotification:Notification.Name = Notification.Name(rawValue: "BookDidChangeNotification")
+let BookKeyNotification:String = "BookKeyNotification"
+
+// MARK: - Class
 
 class LibraryTableViewController: UITableViewController {
-    
-    //--------------------------------------
-    // MARK: - Properties
-    //--------------------------------------
-    
-    var model            : Library
-    var segmentedControl : UISegmentedControl?
-    var delegate         : LibraryTableViewControllerDelegate?
-    
-    //--------------------------------------
-    // MARK: - Initialization
-    //--------------------------------------
-    
-    init(model: Library){
-        self.model = model
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //--------------------------------------
-    // MARK: - UIViewController
-    //--------------------------------------
-    
+	
+	// MARK: - Static
+	
+	static let cellReuseIdentifier	 : String = "BookCell"
+
+	// MARK: - Properties
+	
+	var model            : Library?
+	var orderButton		 : UIBarButtonItem?
+	let refresher		 : UIRefreshControl = UIRefreshControl()
+	var delegate         : LibraryTableViewControllerDelegate?
+	
+	// MARK: - Initialization
+	
+	init(model: Library?){
+		self.model = model
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	// MARK: - UIViewController
+	
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.registerNib(UINib(nibName: "LibraryTableViewCell", bundle: nil), forCellReuseIdentifier: cellId)
-    }
 
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        if let navigationBar = self.navigationController?.navigationBar {
-            
-            segmentedControl = UISegmentedControl(items: ["All books", "Grouped by tag"])
-            segmentedControl!.frame = CGRect(x: (navigationBar.frame.size.width/2)-125, y: 5, width: 250, height: (navigationBar.frame.size.height/1.3))
-            segmentedControl!.autoresizingMask = [.FlexibleWidth, .FlexibleHeight] // for supporting device rotation
-            segmentedControl?.addTarget(self, action: #selector(segmentedControlChanged), forControlEvents: .ValueChanged)
-            navigationBar.addSubview(self.segmentedControl!)
-            
-            if self.model.orderByTags {
-                segmentedControl?.selectedSegmentIndex = 1
-            } else {
-                segmentedControl?.selectedSegmentIndex = 0
-            }
-            
-        }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(reloadData), name: BookIsFavoriteDidChangeNotification, object: nil)
-        
-        self.tableView.reloadData()
-        
+		// Do any additional setup after loading the view.
+		
+		// App title
+		self.title = "HackerBooks"
+		
+		// Create order button
+		self.orderButton = UIBarButtonItem(title: "ABC", style: .done, target: self, action: #selector(LibraryTableViewController.changeOrder(sender:)))
+		self.navigationItem.rightBarButtonItem = self.orderButton
+		
+		// Register Custom Cell
+		self.tableView.register(UINib(nibName: "LibraryTableViewCell", bundle: nil), forCellReuseIdentifier: LibraryTableViewController.cellReuseIdentifier)
+		
+		// Customization & setting refresher
+		self.refresher.tintColor = UIColor.gray
+		self.refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+		self.refresher.addTarget(self, action: #selector(LibraryTableViewController.refreshLibrary), for: UIControlEvents.valueChanged)
+		self.tableView?.addSubview(self.refresher)
+		
+		// Check if exist model
+		if self.model == nil {
+			
+			// Start refreshing
+			self.refresher.beginRefreshing()
+			
+			// First refresh
+			self.refreshLibrary()
+			
+		}
+		
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        segmentedControl?.removeFromSuperview()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		// Observer if book change
+		NotificationCenter.default.addObserver(self, selector: #selector(LibraryTableViewController.reloadData(notification:)), name: BookIsFavoriteDidChangeNotification, object: nil)
+		
+		// Reload table
+		self.tableView.reloadData()
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		
+		// Remove observer
+		NotificationCenter.default.removeObserver(self)
+	}
 
-    }
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    //--------------------------------------
-    // MARK: - Table view delegate
-    //--------------------------------------
+	
+	// MARK: - Table view delegate
+	
+	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		
+		if let book:Book = self.model!.book(atIndex: indexPath.row, forTag: self.model!.tags[indexPath.section]) {
+			
+			if (UIDevice.current.userInterfaceIdiom == .pad) {
+				
+				delegate?.libraryTableViewController(vc: self, didSelectBook: book)
+				NotificationCenter.default.post(Notification(name: BookDidChangeNotification, object: self, userInfo: [BookKeyNotification : book]))
+				
+			} else {
+				
+				self.navigationController?.pushViewController(BookViewController(model: book), animated: true)
+				
+			}
+			
+		}
+		
+	}
 
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        if let book:Book = self.model.book(atIndex: indexPath.row, forTag: self.model.tags[indexPath.section]) {
-            
-            if (UIDevice.currentDevice().userInterfaceIdiom == .Pad) {
-                
-                delegate?.libraryTableViewController(self, didSelectBook: book)
-                
-                let nc = NSNotificationCenter.defaultCenter()
-                let notif = NSNotification(name: BookDidChangeNotification, object: self, userInfo: [BookKey:book])
-                nc.postNotification(notif)
-                
-            } else {
-                
-                navigationController?.pushViewController(BookViewController(model: book), animated: true)
-                
-            }
-            
-        }
-        
-    }
-    
-    //--------------------------------------
     // MARK: - Table view data source
-    //--------------------------------------
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60
+	
+	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+		return 60
+	}
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+		return ( self.model == nil ? 0 : self.model!.tagsCount )
     }
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return self.model.tagsCount
+	
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return self.model!.tags[section].capitalized
+	}
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.model!.booksCount(forTag: self.model!.tags[section])
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       return self.model.booksCount(forTag: self.model.tags[section])
-    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: LibraryTableViewController.cellReuseIdentifier, for: indexPath) as! LibraryTableViewCell
 
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return self.model.tags[section]
+        // Configure the cell...
+		cell.set(model: self.model!.book(atIndex: indexPath.row, forTag: self.model!.tags[indexPath.section]))
+		
+        return cell
     }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        var cell = tableView.dequeueReusableCellWithIdentifier(cellId) as? LibraryTableViewCell
-        
-        if cell == nil{
-            cell = LibraryTableViewCell()
-        }
-        
-        cell?.model = self.model.book(atIndex: indexPath.row, forTag: self.model.tags[indexPath.section])
-        
-        cell?.syncModelWithView()
+	
+	override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+		if let cell = cell as? LibraryTableViewCell {
+			cell.cancel()
+		}
+	}
+	
+	// MARK: - Syncing
+	
+	func changeOrder(sender:UIBarButtonItem) {
+		
+		if sender.title == "ABC" {
+			sender.title = "TAG"
+			self.model?.orderByTags = true
+		} else {
+			sender.title = "ABC"
+			self.model?.orderByTags = false
+		}
+		
+		self.tableView.reloadData()
+		
+	}
+	
+	func reloadData(notification: Notification)  {
+		self.tableView.reloadData()
+	}
+	
+	func refreshLibrary() {
+		
+		self.orderButton?.isEnabled = false
+		
+		if self.refresher.isRefreshing {
+			self.refresher.attributedTitle = NSAttributedString(string: "Updating...")
+		}
+		
+		// Get response from API
+		Alamofire.request("https://parse.netpino.net/api/HackerBooks.php").validate().responseSwiftyJSON {
+			(response:DataResponse<JSON>) in
+			
+			switch response.result {
+			case .success:
+				do {
+					self.model = try Library(jsonArray: response.result.value)
+					self.model?.orderByTags = (self.orderButton?.title == "TAG")
+					self.orderButton?.isEnabled = true
+					
+					self.tableView.reloadData()
+					
+				} catch {
+					displayAlert(target: self, title: "Parsing error", message: "The server response was different than expected.", completionHandler: nil)
+				}
+			case .failure(let error):
+				displayAlert(target: self, title: "Downloading error", message: error.localizedDescription, completionHandler: nil)
+			}
+			
+			if self.refresher.isRefreshing {
+				self.refresher.attributedTitle = NSAttributedString(string: "Pull to refresh")
+				self.refresher.endRefreshing()
+			}
+			
+		}
+		
+	}
 
-        return cell!
-        
-    }
-    
-    //--------------------------------------
-    // MARK: - Syncing
-    //--------------------------------------
-    
-    func reloadData(notification: NSNotification)  {
-        self.tableView.reloadData()
-    }
-    
-    func segmentedControlChanged(sender: UISegmentedControl)  {
-        
-        if sender.selectedSegmentIndex == 0 {
-            self.model.orderByTags = false
-        } else {
-            self.model.orderByTags = true
-        }
-        
-        self.tableView.reloadData()
-        
-    }
-    
 }
 
-//--------------------------------------
 // MARK: - Protocols
-//--------------------------------------
 
 protocol LibraryTableViewControllerDelegate {
-    
-    func libraryTableViewController(vc : LibraryTableViewController, didSelectBook book: Book)
-    
+	
+	func libraryTableViewController(vc : LibraryTableViewController, didSelectBook book: Book)
+	
 }
 
-//--------------------------------------
 // MARK: - Extensions
-//--------------------------------------
 
 extension LibraryTableViewController: UISplitViewControllerDelegate {
-    
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
-        return true
-    }
-    
+	
+	func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController, ontoPrimaryViewController primaryViewController: UIViewController) -> Bool {
+		return true
+	}
+	
 }

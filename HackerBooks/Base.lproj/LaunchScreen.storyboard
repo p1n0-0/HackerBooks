@@ -1,8 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,35 +17,29 @@
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Background.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XQW-aF-3Qk">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="iGV-Lt-ngI">
+                                <rect key="frame" x="123" y="237.5" width="128" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="Mpg-OH-h3o"/>
+                                    <constraint firstAttribute="width" constant="128" id="nSE-co-ush"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HackerBooks" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3o-zq-N2k">
-                                <rect key="frame" x="203" y="36" width="194" height="36"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="30"/>
-                                <color key="textColor" red="0.49110576923076921" green="0.49110576923076921" blue="0.49110576923076921" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading... please wait..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G9O-gY-MtJ">
-                                <rect key="frame" x="191" y="556" width="218" height="24"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-MediumItalic" family="Helvetica Neue" pointSize="20"/>
-                                <color key="textColor" red="0.49110576919999999" green="0.49110576919999999" blue="0.49110576919999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HackerBooks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Cd-lr-iGr">
+                                <rect key="frame" x="114.5" y="415.5" width="145.5" height="31"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="26"/>
+                                <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="G9O-gY-MtJ" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="15e-k7-NDh"/>
-                            <constraint firstItem="Q3o-zq-N2k" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="16" id="OEt-HT-Esw"/>
-                            <constraint firstItem="Q3o-zq-N2k" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="SZ6-Fe-jgd"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="G9O-gY-MtJ" secondAttribute="bottom" constant="20" id="VbF-Rj-GAi"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="XQW-aF-3Qk" secondAttribute="bottom" id="WaR-Yq-joO"/>
-                            <constraint firstAttribute="trailing" secondItem="XQW-aF-3Qk" secondAttribute="trailing" id="fZG-On-w5v"/>
-                            <constraint firstItem="XQW-aF-3Qk" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="hDY-bl-50X"/>
-                            <constraint firstItem="XQW-aF-3Qk" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="wsA-hr-cC8"/>
+                            <constraint firstItem="iGV-Lt-ngI" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="5f5-K9-tLR"/>
+                            <constraint firstItem="9Cd-lr-iGr" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Das-BQ-xzv"/>
+                            <constraint firstItem="9Cd-lr-iGr" firstAttribute="top" secondItem="iGV-Lt-ngI" secondAttribute="bottom" constant="50" id="KQ5-dB-m2b"/>
+                            <constraint firstItem="iGV-Lt-ngI" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-32" id="Zbb-Gm-Rfe"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -52,6 +49,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Background.jpg" width="626" height="626"/>
+        <image name="AppLogo" width="512" height="512"/>
     </resources>
 </document>
